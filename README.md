@@ -90,7 +90,7 @@ CreditPathAI/
 ## 🚀 How to Run the Project
 1. **Clone this repository**
    ```bash
-   git clone https://github.com/<your-username>/CreditPathAI.git
+   git clone https://github.com/<springboardmentor846-alt>/CreditPathAI.git
    cd CreditPathAI
    ```
 2. **Install dependencies**
