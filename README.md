@@ -133,8 +133,8 @@ CreditPathAI/
 ---
 
 ## 👩‍💻 Contributors
-- **Susmitha Nalla** – Project Developer  
-- **Mentor:** [Your Mentor’s Name]
+- Susmitha Nalla – Project Developer  
+- Rohit - Mentor
 
 ---
 
