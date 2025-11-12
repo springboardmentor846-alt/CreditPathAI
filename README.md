@@ -101,10 +101,8 @@ CreditPathAI/
    ```bash
    uvicorn src.api.main:app --reload
    ```
-4. **Access the API docs**
-   - Open: `http://127.0.0.1:8000/docs`
 
-5. **Run the Dashboard**
+4. **Run the Dashboard**
    ```bash
    cd dashboard
    npm install
