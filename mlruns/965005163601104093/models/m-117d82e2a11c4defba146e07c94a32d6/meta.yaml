@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/keyur/Desktop/Infosys%20Internship/mlruns/965005163601104093/models/m-117d82e2a11c4defba146e07c94a32d6/artifacts
+creation_timestamp: 1762947374236
+experiment_id: '965005163601104093'
+last_updated_timestamp: 1762947391953
+model_id: m-117d82e2a11c4defba146e07c94a32d6
+model_type: null
+name: lightgbm_model
+source_run_id: c39a7976ea8449d7adf284d86532fcb0
+status: 2
+status_message: null

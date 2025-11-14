@@ -1,0 +1,22 @@
+artifact_path: file:///C:/Users/keyur/Desktop/Infosys%20Internship/mlruns/965005163601104093/models/m-b86a95d7e79b44af9e6e61df67d17e49/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.1
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 3.6.0
+model_id: m-b86a95d7e79b44af9e6e61df67d17e49
+model_size_bytes: 876
+model_uuid: m-b86a95d7e79b44af9e6e61df67d17e49
+prompts: null
+run_id: ba229a766fb44276a18c890cb82c282d
+utc_time_created: '2025-11-12 13:06:38.280845'

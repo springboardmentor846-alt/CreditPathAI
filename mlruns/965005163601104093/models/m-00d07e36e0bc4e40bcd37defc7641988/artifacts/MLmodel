@@ -1,0 +1,22 @@
+artifact_path: file:///C:/Users/keyur/Desktop/Infosys%20Internship/mlruns/965005163601104093/models/m-00d07e36e0bc4e40bcd37defc7641988/artifacts
+flavors:
+  python_function:
+    data: model.ubj
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.12.1
+  xgboost:
+    code: null
+    data: model.ubj
+    model_class: xgboost.sklearn.XGBClassifier
+    model_format: ubj
+    xgb_version: 3.0.2
+mlflow_version: 3.6.0
+model_id: m-00d07e36e0bc4e40bcd37defc7641988
+model_size_bytes: 479376
+model_uuid: m-00d07e36e0bc4e40bcd37defc7641988
+prompts: null
+run_id: fcdb191041da4af7bc390a3c46794f31
+utc_time_created: '2025-11-12 09:02:17.143219'

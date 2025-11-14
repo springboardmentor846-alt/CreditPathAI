@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/keyur/Desktop/Infosys%20Internship/mlruns/965005163601104093/models/m-9a4456a0b95f48e5a56bd748fb203610/artifacts
+creation_timestamp: 1762947348112
+experiment_id: '965005163601104093'
+last_updated_timestamp: 1762947365803
+model_id: m-9a4456a0b95f48e5a56bd748fb203610
+model_type: null
+name: xgboost_model
+source_run_id: 78663f84c49d496981887d206ce35eed
+status: 2
+status_message: null

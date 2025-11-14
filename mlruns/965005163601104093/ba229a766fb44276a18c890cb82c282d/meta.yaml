@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/keyur/Desktop/Infosys%20Internship/mlruns/965005163601104093/ba229a766fb44276a18c890cb82c282d/artifacts
+end_time: 1762952854214
+entry_point_name: ''
+experiment_id: '965005163601104093'
+lifecycle_stage: active
+run_id: ba229a766fb44276a18c890cb82c282d
+run_name: Logistic_Regression
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762952796509
+status: 3
+tags: []
+user_id: keyur

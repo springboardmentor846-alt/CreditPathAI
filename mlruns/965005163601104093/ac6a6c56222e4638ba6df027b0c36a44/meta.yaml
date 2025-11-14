@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/keyur/Desktop/Infosys%20Internship/mlruns/965005163601104093/ac6a6c56222e4638ba6df027b0c36a44/artifacts
+end_time: 1762938173512
+entry_point_name: ''
+experiment_id: '965005163601104093'
+lifecycle_stage: active
+run_id: ac6a6c56222e4638ba6df027b0c36a44
+run_name: LightGBM
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762938152035
+status: 3
+tags: []
+user_id: keyur

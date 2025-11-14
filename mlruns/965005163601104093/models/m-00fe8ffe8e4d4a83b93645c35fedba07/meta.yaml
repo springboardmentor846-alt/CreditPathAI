@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/keyur/Desktop/Infosys%20Internship/mlruns/965005163601104093/models/m-00fe8ffe8e4d4a83b93645c35fedba07/artifacts
+creation_timestamp: 1762947319175
+experiment_id: '965005163601104093'
+last_updated_timestamp: 1762947341525
+model_id: m-00fe8ffe8e4d4a83b93645c35fedba07
+model_type: null
+name: logistic_regression_model
+source_run_id: 9d875a2c5ae44b86b14cbf2f14b4f0fa
+status: 2
+status_message: null

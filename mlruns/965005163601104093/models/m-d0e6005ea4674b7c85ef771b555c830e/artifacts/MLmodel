@@ -1,0 +1,21 @@
+artifact_path: file:///C:/Users/keyur/Desktop/Infosys%20Internship/mlruns/965005163601104093/models/m-d0e6005ea4674b7c85ef771b555c830e/artifacts
+flavors:
+  lightgbm:
+    code: null
+    data: model.pkl
+    lgb_version: 4.6.0
+    model_class: lightgbm.sklearn.LGBMClassifier
+  python_function:
+    data: model.pkl
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.lightgbm
+    python_version: 3.12.1
+mlflow_version: 3.6.0
+model_id: m-d0e6005ea4674b7c85ef771b555c830e
+model_size_bytes: 356600
+model_uuid: m-d0e6005ea4674b7c85ef771b555c830e
+prompts: null
+run_id: 49c64b1c5e1c4459adb0a83c023376a9
+utc_time_created: '2025-11-12 08:55:38.111138'

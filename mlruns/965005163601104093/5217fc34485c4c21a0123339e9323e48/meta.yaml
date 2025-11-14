@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/keyur/Desktop/Infosys%20Internship/mlruns/965005163601104093/5217fc34485c4c21a0123339e9323e48/artifacts
+end_time: 1762952367418
+entry_point_name: ''
+experiment_id: '965005163601104093'
+lifecycle_stage: active
+run_id: 5217fc34485c4c21a0123339e9323e48
+run_name: XGBoost
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762952278874
+status: 3
+tags: []
+user_id: keyur
