@@ -8,5 +8,5 @@ Structure
 - models/ → ML model training scripts
 - api/ → FastAPI service files
 
-Notes
+Notes: 
 All reusable code modules should be stored here.
