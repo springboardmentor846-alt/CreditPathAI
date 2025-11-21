@@ -1,0 +1,5 @@
+loan_id,loan_amount,term,interest_rate,annual_income,delinquent_2yrs,open_accounts,past_due,loan_status
+1,5000,36,13.5,35000,0,5,0,fully_paid
+2,15000,60,18.9,45000,1,8,1,charged_off
+3,12000,36,11.2,52000,0,6,0,fully_paid
+4,20000,60,20.5,40000,2,10,1,charged_off
