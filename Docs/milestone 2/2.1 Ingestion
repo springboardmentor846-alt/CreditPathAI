@@ -1,0 +1,17 @@
+import pandas as pd
+import sqlite3
+
+def load_data():
+    df1 = pd.read_csv("credit_risk_dataset.csv")
+    df2 = pd.read_csv("Loan_Default.csv")
+
+    conn = sqlite3.connect("credit_data.db")
+    df1.to_sql("credit_risk", conn, if_exists="replace", index=False)
+    df2.to_sql("loan_default", conn, if_exists="replace", index=False)
+
+    conn.close()
+
+    print("Ingestion complete")
+
+if __name__ == "__main__":
+    load_data()
