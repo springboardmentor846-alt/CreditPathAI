@@ -1,0 +1,25 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+def run_eda():
+    df = pd.read_csv("credit_risk_dataset.csv")
+
+    print(df.head())
+    print(df.info())
+    print(df.describe())
+
+    # Plot Loan Status Distribution
+    sns.countplot(x=df['loan_status'])
+    plt.title("Loan Status Distribution")
+    plt.show()
+
+    # Histogram for all numeric columns
+    num_cols = df.select_dtypes(include=['float64','int64']).columns
+    for col in num_cols:
+        sns.histplot(df[col], kde=True)
+        plt.title(f"{col} Distribution")
+        plt.show()
+
+if __name__ == "__main__":
+    run_eda()
