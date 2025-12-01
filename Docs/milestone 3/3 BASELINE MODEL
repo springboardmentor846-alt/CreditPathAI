@@ -1,0 +1,76 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
+from sklearn.impute import SimpleImputer
+import pickle
+
+def train_baseline():
+    # Load your dataset
+    df = pd.read_csv("credit_risk_dataset.csv")
+
+     
+     1. Fix target column
+     
+    if df['loan_status'].dtype == object:
+        df['loan_status'] = df['loan_status'].map({
+            "Default": 1,
+            "Fully Paid": 0,
+            "Charged Off": 1,
+            "Late": 1
+        }).fillna(0)
+
+     
+     2. Split into features + target
+    
+    y = df['loan_status']
+    X = df.drop("loan_status", axis=1)
+
+     
+     3. Convert categorical columns
+   
+    X = pd.get_dummies(X, drop_first=True)
+
+    
+     4. FIX: Handle NaN values
+    
+    imputer = SimpleImputer(strategy='median')
+    X = imputer.fit_transform(X)
+
+     
+     5. Train-test split
+    
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+
+    
+     6. Scaling
+    
+    scaler = StandardScaler()
+    X_train = scaler.fit_transform(X_train)
+    X_test = scaler.transform(X_test)
+
+     
+     7. Logistic Regression Model
+    
+    model = LogisticRegression(max_iter=3000)
+    model.fit(X_train, y_train)
+
+   
+     8. Predictions + AUC Score
+    
+    preds = model.predict_proba(X_test)[:, 1]
+    auc = roc_auc_score(y_test, preds)
+
+    print("Baseline Logistic Regression AUC:", auc)
+
+    
+     9. Save Model
+    
+    with open("logistic_regression.pkl", "wb") as f:
+        pickle.dump(model, f)
+
+if __name__ == "__main__";
+    train_baseline()
