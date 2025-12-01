@@ -1,0 +1,38 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
+import lightgbm as lgb
+import pickle
+
+def train_lgbm():
+    df = pd.read_csv("credit_risk_dataset.csv")
+
+    if df['loan_status'].dtype == object:
+        df['loan_status'] = df['loan_status'].map({"Default":1, "Fully Paid":0})
+
+    y = df['loan_status']
+    X = df.drop("loan_status", axis=1)
+
+    X = pd.get_dummies(X, drop_first=True)
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+
+    model = lgb.LGBMClassifier(
+        n_estimators=400,
+        learning_rate=0.03,
+        num_leaves=31
+    )
+
+    model.fit(X_train, y_train)
+
+    preds = model.predict_proba(X_test)[:,1]
+    auc = roc_auc_score(y_test, preds)
+
+    print("LightGBM AUC:", auc)
+
+    pickle.dump(model, open("lightgbm.pkl", "wb"))
+
+if __name__ == "__main__":
+    train_lgbm()
