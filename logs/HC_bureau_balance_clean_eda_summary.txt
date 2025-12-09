@@ -1,0 +1,1 @@
+{'shape': (27299925, 3), 'total_missing_values': 0, 'missing_values_per_column': {'sk_id_bureau': 0, 'months_balance': 0, 'status': 0}, 'numeric_columns': ['sk_id_bureau', 'months_balance'], 'categorical_columns': ['status']}
