@@ -11,10 +11,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],   # allow all
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],   # allow all HTTP methods
+    allow_headers=["*"],   # allow all headers
 )
 
 model = joblib.load("src/models/xgboost_model.pkl")
