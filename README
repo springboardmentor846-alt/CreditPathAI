@@ -1,0 +1,324 @@
+CreditPathAI – Loan Default & Recovery Intelligence
+CreditPathAI is a machine‑learning–driven platform that predicts borrower default risk and recommends personalized recovery actions to improve loan collection efficiency. The project combines credit‑risk datasets, logistic regression and boosting models, FastAPI services, and React/Plotly dashboards into an end‑to‑end system suitable for learning, demos, and PoC use.​
+
+1. Project Overview
+1.1 Problem
+Banks and NBFCs lose money when borrowers default on loans or pay late. Traditional rule‑based scorecards are often:
+
+Slow to update
+
+Hard to scale across many borrowers
+
+Weak at capturing complex patterns in data​
+
+1.2 CreditPathAI Goal
+CreditPathAI aims to:
+
+Predict default risk (probability of default) for each borrower.
+
+Bucket borrowers into risk levels (Low / Medium / High).
+
+Recommend actions for collection agents:
+
+Low risk → Mail / message
+
+Medium risk → SMS reminder
+
+High risk → Immediate call / strong follow‑up
+
+Show business impact (profit, loss, avoided loss) in simple tables and charts that HR, managers, and clients can understand.​
+
+2. High‑Level Architecture & Flow
+2.1 Text Flowchart
+text
+[Raw Data: credit_risk_dataset, loan_default]
+         |
+         v
+  Data Ingestion (Pandas, CSV → DataFrame / DB)
+         |
+         v
+  Data Cleaning & Feature Engineering
+  - Handle missing values
+  - Create features (EMI-to-salary, repayment velocity, risk score)
+         |
+         v
+  Model Training (Logistic Regression, XGBoost / LightGBM)
+  - Train / test split
+  - Metrics: AUC-ROC, precision, recall, F1
+         |
+         v
+  Risk Scoring & Recommendation Engine
+  - Convert probabilities → Low/Medium/High risk
+  - Map risk → actions (Mail, SMS, Immediate Call)
+         |
+         v
+  Serving Layer (FastAPI, Docker)
+  - /predict endpoint for scoring new borrowers
+         |
+         v
+  Frontend & Dashboards (React + Plotly)
+  - Portfolio charts
+  - Person-level view (name, age, salary, risk, action, profit/loss)
+For the simple Colab example, the flow is:
+
+text
+Generate synthetic people data (name, age, salary, loan, credit score)
+        |
+        v
+Train Logistic Regression → default probability
+        |
+        v
+Bucket into Low / Medium / High risk
+        |
+        v
+Assign action (Mail / SMS / Immediate Call)
+        |
+        v
+Estimate profit/loss per person (interest vs. loss given default)
+        |
+        v
+Show final table + 2 graphs (profit vs risk level, action distribution)
+3. Tech Stack
+3.1 Data & ML
+Python 3.x
+
+Pandas, NumPy – data ingestion and feature engineering​
+
+scikit‑learn – logistic regression, train/test split, metrics​
+
+XGBoost, LightGBM – advanced models (for main project)​
+
+MLflow (local) – optional experiment tracking (AUC, parameters)​
+
+3.2 Serving & Frontend
+FastAPI – REST API for model predictions​
+
+Docker – containerization for deployment
+
+React.js – frontend SPA
+
+Plotly.js / plotly‑python – interactive charts (risk buckets, confusion matrix, profit/loss)​
+
+3.3 Infrastructure & CI/CD
+SQLite / PostgreSQL – data storage (optional, production‑style)
+
+GitHub Actions – CI for tests and builds (optional)​
+
+4. Repository Structure (Suggested)
+text
+CreditPathAI/
+├── notebooks/
+│   ├── 01_eda_and_baseline.ipynb            # EDA + logistic regression baseline
+│   ├── 02_advanced_models_xgb_lgbm.ipynb    # XGBoost / LightGBM tuning
+│   └── 03_people_level_business_example.ipynb  # name/age/profit/loss example (your Colab code)
+├── data/
+│   ├── credit_risk_dataset.csv              # Kaggle-style credit risk data
+│   └── loan_default.csv                     # Loan default dataset
+├── src/
+│   ├── ingestion.py                         # CSV → DataFrame / DB
+│   ├── features.py                          # feature engineering
+│   ├── train.py                             # training scripts
+│   ├── recommend.py                         # risk → action mapping
+│   └── serve.py                             # FastAPI app
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── App.js
+│   └── package.json
+├── docker/
+│   ├── Dockerfile
+│   └── docker-compose.yml
+├── requirements.txt
+└── README.md
+5. How to Run (Colab Example)
+5.1 Setup
+Open Google Colab.
+
+Create a new notebook.
+
+Copy the “person‑level example + 2 graphs” Python script from this README or 03_people_level_business_example.ipynb.
+
+Run all cells.
+
+5.2 What the Example Does
+Creates 30 people with:
+
+name, age, monthly_salary, loan_amount, interest_rate, tenure_months, credit_score.
+
+Builds a logistic regression model to predict default probability per person.​
+
+Converts probabilities into risk levels:
+
+Low: safe customers
+
+Medium: moderate risk
+
+High: likely to default
+
+Maps risk → actions:
+
+Low → Mail / message
+
+Medium → SMS reminder
+
+High → Immediate call
+
+Estimates profit/loss per person:
+
+If pay: earn 1‑year interest income
+
+If default: lose part of principal using a simple Loss Given Default (LGD) assumption (e.g., 40% of principal).​
+
+Outputs:
+
+One explanation table (easy for HR/clients).
+
+Two graphs:
+
+Bar: average profit/loss per risk level
+
+Pie: how many customers get Mail / SMS / Immediate Call​
+
+6. Step‑by‑Step Process (Main Project)
+Requirements & Data Collection (Milestone 1)
+
+Define KPIs (AUC‑ROC threshold, acceptable default rate, recall on defaulters).​
+
+Collect credit_risk_dataset and loan_default datasets.
+
+Set up GitHub repo and environment (requirements.txt).
+
+Data Ingestion & EDA (Milestone 2)
+
+Use Pandas to load CSVs; optionally store in SQLite/PostgreSQL.​
+
+Join datasets on common keys (e.g., loan_id).
+
+EDA: distribution of defaults, correlations, missing values, class imbalance.
+
+Baseline Model – Logistic Regression (Milestone 3)
+
+Perform feature engineering (e.g., EMI‑to‑salary, debt‑to‑income, repayment velocity).​
+
+Train logistic regression; compute AUC‑ROC, confusion matrix, precision, recall, F1.​
+
+Use this model for interpretability and stakeholder explanation.
+
+Advanced Models – XGBoost / LightGBM (Milestone 4)
+
+Train gradient boosting models; tune hyperparameters.
+
+Compare performance to logistic regression; often boosting models get higher AUC but may be less interpretable.​
+
+Recommendation Engine & API (Milestone 5)
+
+Define probability thresholds, e.g.,
+
+p
+<
+0.25
+p<0.25 → Low risk → Mail/message
+
+0.25
+≤
+p
+<
+0.6
+0.25≤p<0.6 → Medium risk → SMS
+
+p
+≥
+0.6
+p≥0.6 → High risk → Immediate call
+
+Implement FastAPI endpoint /predict:
+
+Input: borrower features (JSON).
+
+Output: default probability, risk bucket, recommended action.​
+
+Frontend & Dashboards (Milestone 6)
+
+React + Plotly dashboards showing:
+
+Portfolio risk distribution (pie / bar).
+
+Model performance metrics (AUC, confusion matrix).​
+
+Person‑level view with risk and recommended action.
+
+Deployment & CI/CD
+
+Containerize API with Docker.
+
+Optional: add GitHub Actions pipeline (lint, tests, build, Docker image).​
+
+7. How It Works (Non‑Technical Explanation)
+The system looks at past data about borrowers (income, loan amount, credit score, etc.) and learns patterns of who paid on time and who defaulted.​
+
+It uses these patterns to estimate a risk score (probability of default) for new borrowers.​
+
+Based on the risk score:
+
+Safe customers get gentle reminders (email/SMS).
+
+Risky customers get urgent phone calls or stronger action.
+
+The example notebook converts this into rupee impact:
+
+Shows how much money the bank gains if customers pay interest.
+
+Shows how much is lost if customers default.
+
+Summarizes by risk bucket so business teams see where money is made or lost.​
+
+8. Advantages & Disadvantages
+8.1 Advantages
+Better prediction than pure rules: ML models can capture complex patterns in borrower behavior compared to fixed rule‑based systems.​
+
+Actionable outputs: Converts technical predictions into concrete actions for collection agents (Mail / SMS / Call).
+
+Explainable baseline: Logistic regression is relatively interpretable and easy to explain to regulators and management.​
+
+Business impact visibility: Profit/loss estimation per risk bucket helps justify investments and strategies to non‑technical stakeholders.​
+
+End‑to‑end demo: Shows full flow from raw CSV → model → API → dashboard.
+
+8.2 Disadvantages / Limitations
+Data quality dependency: Poor or biased training data leads to poor predictions and potential fairness issues.​
+
+Model drift: Borrower behavior changes over time; models need retraining and monitoring.​
+
+Interpretability vs accuracy: Advanced models (XGBoost/LightGBM) may be more accurate but harder to explain versus logistic regression.​
+
+Regulatory & ethical concerns: Real‑world deployments must handle explainability, fairness, and privacy; this project focuses on technical pipeline, not full compliance.​
+
+9. Use Cases
+Internal demo for credit‑risk teams.
+
+Interview / portfolio project to showcase ML + MLOps + frontend.
+
+Educational material for teaching:
+
+Logistic regression for credit risk
+
+Model evaluation (AUC‑ROC, confusion matrix)
+
+Business translation of ML (profit, loss, actions).​
+
+10. How to Use in Your Repository
+Put this README.md in the root of your GitHub repo.
+
+Add links to:
+
+Your Colab notebook(s).
+
+Screenshots of your dashboards.
+
+Any deployed FastAPI endpoint (if available).
+
+Update names and paths (CreditPathAI, data/, notebooks/) to match your actual project structure.
+
+This gives visitors a clear “story” from raw data to business impact, which is what HR, clients, and technical reviewers usually look for in a credit‑risk ML project.
+
