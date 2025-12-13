@@ -37,15 +37,16 @@ def health_check():
 
 @app.post("/predict/")
 def predict(data: LoanData):
-    df = pd.DataFrame([data.dict()])
-    prob = model.predict_proba(df)[0][1]
+    # TEMPORARY MOCK RESPONSE (for frontend + review)
+    prob = 0.42
     category = risk_category(prob)
     action = recovery_action(category)
 
     return {
         "risk_category": category,
-        "probability": round(prob, 4),
+        "probability": prob,
         "recommendation": action
     }
+
 if __name__ == "__main__":
     uvicorn.run("src.api.app:app", host="0.0.0.0", port=8000, reload=True)
