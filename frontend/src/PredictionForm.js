@@ -49,16 +49,16 @@ function PredictionForm() {
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {result && (
+      {result?.recommendation && (
         <div style={styles.result}>
           <h3>Result</h3>
           <p><b>Risk Category:</b> {result.risk_category}</p>
           <p><b>Probability:</b> {result.probability}</p>
 
           <h4>Recommendation</h4>
-          <p><b>Action:</b> {result.recommendation.action}</p>
-          <p><b>Message:</b> {result.recommendation.message}</p>
-          <p><b>Priority:</b> {result.recommendation.priority}</p>
+          <p><strong>Action:</strong> {result.recommendation.action}</p>
+          <p><strong>Message:</strong> {result.recommendation.message}</p>
+          <p><strong>Priority:</strong> {result.recommendation.priority}</p>
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 def risk_category(prob):
-    if prob >= 0.75:
-        return "High Risk"
-    elif prob >= 0.40:
+    if prob < 0.4:
+        return "Low Risk"
+    elif prob < 0.7:
         return "Medium Risk"
     else:
-        return "Low Risk"
+         "High Risk"

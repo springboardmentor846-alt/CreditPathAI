@@ -34,17 +34,28 @@ def home():
 def health_check():
     return {"status": "ok"}
 
-
 @app.post("/predict/")
 def predict(data: LoanData):
-    # TEMPORARY MOCK RESPONSE (for frontend + review)
-    prob = 0.42
-    category = risk_category(prob)
+    # 1. Prepare dataframe
+    df = pd.DataFrame([data.dict()])
+
+    # 2. Always compute ML probability
+    prob = model.predict_proba(df)[0][1]
+
+    # 3. Rule-based overrides (OPTION A)
+    if data.credit_score < 550 or data.dtir1 > 50:
+        category = "High Risk"
+    elif data.credit_score > 750 and data.dtir1 < 20:
+        category = "Low Risk"
+    else:
+        category = risk_category(prob)
+
+    # 4. Recommendation must match category
     action = recovery_action(category)
 
     return {
         "risk_category": category,
-        "probability": prob,
+        "probability": round(prob, 2),
         "recommendation": action
     }
 
