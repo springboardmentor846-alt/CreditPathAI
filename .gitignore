@@ -1,6 +1,6 @@
 venv/
 __pycache__/
 .DS_Store
-*.csv
+#*.csv
 *.zip
-home-credit-default-risk/
+#home-credit-default-risk/
