@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { predictRisk } from "./api";
+import RiskCharts from "./components/RiskCharts";
+import RiskSummaryDashboard from "./components/RiskSummaryDashboard";
+import RiskSummaryChart from "./components/RiskSummaryChart";
+import AgentDashboard from "./components/AgentDashboard";
 
 function PredictionForm() {
   const [formData, setFormData] = useState({
@@ -68,6 +72,14 @@ function PredictionForm() {
           <h3>Prediction Result</h3>
           <p><b>Risk Category:</b> {result.risk_category}</p>
           <p><b>Probability:</b> {result.probability}</p>
+        
+          <div className="result-card">
+          <RiskCharts probability={result.probability} />
+          <RiskSummaryDashboard result={result} /> 
+          <RiskSummaryChart probability={result.probability} />
+          <AgentDashboard result={result} />
+          </div>
+
 
           {result.recommendation && (
             <>
