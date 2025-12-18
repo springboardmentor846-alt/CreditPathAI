@@ -36,28 +36,26 @@ def health_check():
 
 @app.post("/predict/")
 def predict(data: LoanData):
-    # 1. Prepare dataframe
-    df = pd.DataFrame([data.dict()])
-
-    # 2. Always compute ML probability
-    prob = model.predict_proba(df)[0][1]
-
-    # 3. Rule-based overrides (OPTION A)
-    if data.credit_score < 550 or data.dtir1 > 50:
-        category = "High Risk"
-    elif data.credit_score > 750 and data.dtir1 < 20:
+    # TEMPORARY MOCK LOGIC (NO MODEL)
+    if data.credit_score > 700 and data.dtir1 < 0.35:
         category = "Low Risk"
+        prob = 0.15
+    elif data.credit_score > 600:
+        category = "Medium Risk"
+        prob = 0.45
     else:
-        category = risk_category(prob)
+        category = "High Risk"
+        prob = 0.75
 
-    # 4. Recommendation must match category
     action = recovery_action(category)
 
     return {
         "risk_category": category,
-        "probability": round(prob, 2),
+        "probability": prob,
         "recommendation": action
     }
+
+model = joblib.load("src/models/xgboost_model.pkl")
 
 if __name__ == "__main__":
     uvicorn.run("src.api.app:app", host="0.0.0.0", port=8000, reload=True)
