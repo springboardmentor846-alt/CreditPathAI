@@ -10,19 +10,20 @@ function RiskCharts({ probability }) {
 
       <Plot
         data={[
-          {
-            x: ["Default Risk"],
-            y: [probability * 100],
-            type: "bar",
-          },
-        ]}
-        layout={{
-          width: 450,
-          height: 300,
-          yaxis: { range: [0, 100], title: "Probability (%)" },
-          title: "Loan Default Probability",
-        }}
-      />
+        {
+          x: ["Default Risk"],
+          y: [probability * 100],
+          type: "bar",
+        },
+      ]}
+      layout={{
+        autosize: true,
+        yaxis: { range: [0, 100], title: "Probability (%)" },
+        margin: { t: 40, l: 40, r: 20, b: 40 },
+      }}
+      useResizeHandler={true}
+      style={{ width: "100%", height: "100%" }}
+    />
     </div>
   );
 }

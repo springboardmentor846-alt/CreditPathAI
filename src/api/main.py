@@ -37,7 +37,7 @@ def health_check():
 @app.post("/predict/")
 def predict(data: LoanData):
     # TEMPORARY MOCK LOGIC (NO MODEL)
-    if data.credit_score > 700 and data.dtir1 < 0.35:
+    if data.credit_score > 750 and data.dtir1 < 20:
         category = "Low Risk"
         prob = 0.15
     elif data.credit_score > 600:
