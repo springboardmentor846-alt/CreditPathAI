@@ -27,24 +27,6 @@ The trained model is deployed using **FastAPI** for real-time predictions.
 - UCI Credit Card Default Dataset
 - Contains customer demographics, billing history, and repayment behavior
 - Target variable: default payment next month
-
-📌 Raw datasets are not included in this repository.
-
-
-🏗️ Project Structure
-
-CreditPathAI/
-│
-├── creditpath_api.py # FastAPI application
-├── creditpath_xgb.pkl # Trained XGBoost model
-├── creditpath_scaler.pkl # StandardScaler used in training
-├── requirements.txt # Project dependencies
-└── README.md # Project documentation
-
-
-
-
-
 ⚙️ Installation & Setup
 
 1️⃣ Clone the repository
