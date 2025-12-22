@@ -1,0 +1,20 @@
+# FastAPI framework for building REST APIs
+fastapi==0.115.6
+
+# ASGI server used to run FastAPI
+uvicorn==0.30.6
+
+# Data validation and request schema handling (used by FastAPI)
+pydantic==2.12.4
+
+# Data manipulation (used to convert input JSON to DataFrame)
+pandas==2.2.2
+
+# Machine learning utilities (StandardScaler, metrics, etc.)
+scikit-learn==1.2.2
+
+# XGBoost model used for credit default prediction
+xgboost==1.6.2
+
+# Model serialization and loading (.pkl files)
+joblib==1.4.2
