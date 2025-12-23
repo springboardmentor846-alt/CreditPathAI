@@ -6,6 +6,8 @@ Automating and optimizing  the loan recovery lifecycle by modeling  repayment be
 
 To design and develop a machine learning–driven platform that predicts borrower default risk and recommends personalized recovery actions. Using open-source technologies to ensure cost-effectiveness, scalability, and reliability. The system aims to improve delinquency recovery efficiency and equip collection agents with actionable insights.  
 
+The XGBoost model predicts the probability of loan default based on borrower financial attributes such as income, credit score, LTV, and DTI. Based on probability thresholds, borrowers are classified into Low, Medium, or High risk categories.
+
 # Tech Stack
 
 # Frontend
@@ -50,4 +52,34 @@ To design and develop a machine learning–driven platform that predicts borrowe
 - Risk Distribution Pie Chart
 - Risk Summary Dashboard
 - Agent Action Recommendations
+
+# Future Enhancements-
+
+# DevOps & Deployment Enhancements
+
+Docker and Containerization
+  - Containerize frontend, backend, and model services
+  - Enable consistent deployment across environments
+
+CI/CD Pipeline
+  - GitHub Actions for:
+    - Automated testing
+    - Linting & formatting
+    - Build & deployment on push
+
+Cloud Deployment
+  - Deploy backend on AWS / Azure / GCP
+  - Host frontend using Netlify or Vercel
+  - Use managed services for scalability
+
+Monitoring & Logging
+  - API health monitoring (Prometheus / Grafana)
+  - Centralized logging (ELK stack)
+
+Security Enhancements
+  - Authentication & role-based access
+  - API rate limiting
+  - Secure secrets using environment variables
+
+
 
