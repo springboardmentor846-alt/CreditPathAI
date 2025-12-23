@@ -44,7 +44,7 @@ The XGBoost model predicts the probability of loan default based on borrower fin
 - cd frontend
 - npm install
 - npm start
-- Frontend will be available at: http://localhost:8000
+- Frontend will be available at: http://localhost:3000
 
 # Dashboards & Visualizations
 
