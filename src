@@ -1,1 +1,29 @@
+CreditPathAI/
+│
+├── src/
+│   ├── data/
+│   │   └── load_data.py
+│   │
+│   ├── features/
+│   │   └── feature_engineering.py
+│   │
+│   ├── models/
+│   │   ├── train.py
+│   │   └── predict.py
+│   │
+│   ├── recommender/
+│   │   └── actions.py
+│   │
+│   └── utils/
+│       └── config.py
+│
+├── api/
+│   └── main.py
+│
+├── data/
+│   └── loan_default_sample.csv
+│
+├── requirements.txt
+├── .gitignore
+└── README.md
 
