@@ -1,0 +1,57 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
+import joblib
+import numpy as np
+
+# Load trained model
+model = joblib.load("../models/model.pkl")
+
+app = FastAPI(title="CreditPathAI API")
+
+class LoanInput(BaseModel):
+    loan_amount: float
+    term: int
+    interest_rate: float
+    income: float
+    employment_length: int
+    credit_score: int
+    dtir: float
+    previous_defaults: int
+    late_payments: int
+    current_balance: float
+
+@app.post("/predict")
+def predict_default(data: LoanInput):
+    features = np.array([[ 
+        data.loan_amount,
+        data.term,
+        data.interest_rate,
+        data.income,
+        data.employment_length,
+        data.credit_score,
+        data.dtir,
+        data.previous_defaults,
+        data.late_payments,
+        data.current_balance
+    ]])
+
+    prob = model.predict_proba(features)[0][1]
+
+    if prob < 0.3:
+        risk = "Low Risk"
+        action = "Send automated reminder SMS"
+    elif prob < 0.6:
+        risk = "Medium Risk"
+        action = "Agent phone call"
+    elif prob < 0.8:
+        risk = "High Risk"
+        action = "Multiple follow-ups + repayment plan"
+    else:
+        risk = "Critical Risk"
+        action = "Field visit / legal escalation"
+
+    return {
+        "default_probability": round(float(prob), 2),
+        "risk_category": risk,
+        "recommended_action": action
+    }
