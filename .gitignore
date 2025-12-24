@@ -1,0 +1,9 @@
+# Ignore trained models
+models/*.pkl
+
+# Ignore virtual environment
+venv/
+__pycache__/
+
+# Ignore system files
+.DS_Store
