@@ -42,7 +42,7 @@ class LoanInput(BaseModel):
     Age: int
     Income: float
     LoanAmount: float
-    CreditScore: float
+    CreditScore: int
     MonthsEmployed: int
     NumCreditLines: int
     InterestRate: float
@@ -82,10 +82,13 @@ def predict(data: LoanInput):
         df_input[col + "_encoded"] = encoder.transform(df_input[col])
 
     # ---- Align with training features ----
-    final_input = pd.DataFrame(columns=feature_columns)
-    final_input.loc[0] = 0
-    final_input.update(df_input)
-
+    final_input = pd.DataFrame(
+        data=np.zeros((1, len(feature_columns)), dtype=float),
+        columns=feature_columns
+    )
+    for col in df_input.columns:
+        if col in final_input.columns:
+            final_input.at[0, col] = float(df_input.at[0, col])
     # ---- Scale input ----
     scaled_input = scaler.transform(final_input)
 
@@ -95,9 +98,9 @@ def predict(data: LoanInput):
     base_pred = baseline_model.predict(scaled_input)[0]
     base_prob = baseline_model.predict_proba(scaled_input)[0][1]
 
-    # Final model (LightGBM)
-    final_pred = final_model.predict(scaled_input)[0]
-    final_prob = final_model.predict_proba(scaled_input)[0][1]
+    # Final model (LightGBM) - uses NON-scaled
+    final_pred = final_model.predict(final_input)[0]
+    final_prob = final_model.predict_proba(final_input)[0][1]
 
     # Response
     return {
@@ -105,37 +108,61 @@ def predict(data: LoanInput):
             "name": "Logistic Regression",
             "prediction": int(base_pred),
             "probability": round(float(base_prob), 4),
-            "risk_level": "HIGH DEFAULT RISK" if base_pred == 1 else "LOW DEFAULT RISK"
+            "risk_level": "HIGH DEFAULT RISK" if base_prob >= 0.5 else "LOW DEFAULT RISK"
         },
         "final_model": {
             "name": "LightGBM",
             "prediction": int(final_pred),
             "probability": round(float(final_prob), 4),
-            "risk_level": "HIGH DEFAULT RISK" if final_pred == 1 else "LOW DEFAULT RISK"
+            "risk_level": "HIGH DEFAULT RISK" if final_prob >= 0.5 else "LOW DEFAULT RISK"
         }
     }
 
 @app.get("/roc-metrics")
 def get_roc_metrics():
-
     models = {
-        "Logistic Regression": log_model,
-        "XGBoost": xgb_model,
-        "LightGBM": lgbm_model,
+        "Logistic Regression": (log_model, True),   # Needs scaling
+        "XGBoost": (xgb_model, False),              # No scaling
+        "LightGBM": (lgbm_model, False),            # No scaling
     }
-
+    
     roc_results = {}
-
-    for name, model in models.items():
-        y_prob = model.predict_proba(X_test)[:, 1]
-
+    for name, (model, needs_scaling) in models.items():
+        if needs_scaling:
+            X_test_processed = scaler.transform(X_test)
+        else:
+            X_test_processed = X_test
+        
+        y_prob = model.predict_proba(X_test_processed)[:, 1]
         fpr, tpr, _ = roc_curve(y_test, y_prob)
         auc = roc_auc_score(y_test, y_prob)
-
+        
         roc_results[name] = {
             "fpr": fpr.tolist(),
             "tpr": tpr.tolist(),
             "auc": round(float(auc), 4),
         }
-
     return roc_results
+
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+@app.get("/model-performance")
+def get_performance():
+    results = {}
+
+    for name, model, needs_scaling in [
+        ("Logistic", log_model, True),
+        ("XGBoost", xgb_model, False),
+        ("LightGBM", lgbm_model, False),
+    ]:
+        X_eval = scaler.transform(X_test) if needs_scaling else X_test
+        y_pred = model.predict(X_eval)
+
+        results[name] = {
+            "accuracy": round(accuracy_score(y_test, y_pred), 4),
+            "precision": round(precision_score(y_test, y_pred), 4),
+            "recall": round(recall_score(y_test, y_pred), 4),
+            "f1": round(f1_score(y_test, y_pred), 4),
+        }
+
+    return results

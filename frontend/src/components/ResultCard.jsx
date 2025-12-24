@@ -1,4 +1,3 @@
-import ModelComparisonChart from "./ModelComparisonChart";
 import RiskGauge from "./RiskGauge";
 import "./ResultCard.css";
 
@@ -55,7 +54,6 @@ function ResultCard({ result }) {
 
       {/* Charts Section */}
       <div className="charts-section">
-        <ModelComparisonChart result={result} />
         <RiskGauge result={result} />
       </div>
     </div>

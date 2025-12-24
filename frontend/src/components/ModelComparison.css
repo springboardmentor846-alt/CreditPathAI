@@ -1,0 +1,46 @@
+.roc-card {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.roc-card h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+/* Plot container */
+.roc-card .js-plotly-plot {
+  border-radius: 12px;
+}
+
+/* Verdict box */
+.verdict-box {
+  margin-top: 25px;
+  padding: 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #eff6ff, #eef2ff);
+  border: 1px solid #2563eb;
+}
+
+.verdict-box h4 {
+  margin-bottom: 8px;
+  color: #1e40af;
+}
+
+.verdict-box p {
+  font-size: 14px;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+/* Loading text */
+.roc-loading {
+  text-align: center;
+  margin-top: 30px;
+  color: #6b7280;
+}

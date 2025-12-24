@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
+import "./ModelComparison.css";
 
 function ModelComparison() {
   const [rocData, setRocData] = useState(null);
@@ -11,7 +12,7 @@ function ModelComparison() {
       .catch((err) => console.error(err));
   }, []);
 
-  if (!rocData) return <p>Loading ROC curves...</p>;
+  if (!rocData) return <p className="roc-loading">Loading ROC curves...</p>;
 
   const traces = Object.keys(rocData).map((modelName) => ({
     x: rocData[modelName].fpr,
@@ -37,7 +38,7 @@ function ModelComparison() {
   );
 
   return (
-    <div style={{ marginTop: "40px" }}>
+    <div className="roc-card">
       <h3>ROC–AUC Model Comparison</h3>
 
       <Plot
@@ -50,15 +51,7 @@ function ModelComparison() {
         }}
       />
 
-      <div
-        style={{
-          marginTop: "20px",
-          padding: "15px",
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          backgroundColor: "#f9f9f9",
-        }}
-      >
+      <div className="verdict-box">
         <h4>📌 Final Verdict</h4>
         <p>
           <strong>{bestModel[0]}</strong> achieved the highest ROC–AUC score (
