@@ -5,6 +5,17 @@ import pandas as pd
 import numpy as np
 import joblib
 
+from sklearn.metrics import roc_curve, roc_auc_score
+
+# Load test data
+X_test = joblib.load("models/X_test.pkl")
+y_test = joblib.load("models/y_test.pkl")
+
+# Load models
+log_model = joblib.load("models/logistic_regression_model.pkl")
+xgb_model = joblib.load("models/xgboost_model.pkl")
+lgbm_model = joblib.load("models/lightgbm_model.pkl")
+
 # Load models & preprocessing artifacts
 baseline_model = joblib.load("models/logistic_regression_model.pkl")  # Baseline
 final_model = joblib.load("models/lightgbm_model.pkl")               # Final
@@ -103,3 +114,28 @@ def predict(data: LoanInput):
             "risk_level": "HIGH DEFAULT RISK" if final_pred == 1 else "LOW DEFAULT RISK"
         }
     }
+
+@app.get("/roc-metrics")
+def get_roc_metrics():
+
+    models = {
+        "Logistic Regression": log_model,
+        "XGBoost": xgb_model,
+        "LightGBM": lgbm_model,
+    }
+
+    roc_results = {}
+
+    for name, model in models.items():
+        y_prob = model.predict_proba(X_test)[:, 1]
+
+        fpr, tpr, _ = roc_curve(y_test, y_prob)
+        auc = roc_auc_score(y_test, y_prob)
+
+        roc_results[name] = {
+            "fpr": fpr.tolist(),
+            "tpr": tpr.tolist(),
+            "auc": round(float(auc), 4),
+        }
+
+    return roc_results
