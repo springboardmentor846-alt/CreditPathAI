@@ -2,6 +2,7 @@ import LoanForm from "./components/LoanForm";
 import ResultCard from "./components/ResultCard";
 import { useState } from "react";
 import "./App.css";
+import ModelComparison from "./components/ModelComparison";
 
 function App() {
   const [result, setResult] = useState(null);
@@ -15,6 +16,7 @@ function App() {
 
       <LoanForm onResult={setResult} />
       <ResultCard result={result} />
+      <ModelComparison />
 
       <footer className="app-footer">
         © 2025 Loan Risk Analytics • ML Powered
