@@ -1,0 +1,44 @@
+.rollout-card {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+}
+
+.rollout-card h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #1f2937;
+}
+
+.rollout-card h4 {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.rollout-card ul {
+  padding-left: 20px;
+}
+
+.rollout-card li {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Risk-specific themes (match ResultCard colors) */
+.low {
+  border-left: 6px solid #16a34a;
+  background: #f0fdf4;
+}
+
+.medium {
+  border-left: 6px solid #f59e0b;
+  background: #fffbeb;
+}
+
+.high {
+  border-left: 6px solid #dc2626;
+  background: #fef2f2;
+}

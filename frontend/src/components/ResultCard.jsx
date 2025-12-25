@@ -1,4 +1,5 @@
 import RiskGauge from "./RiskGauge";
+import RollOutPlan from "./RollOutPlan";
 import "./ResultCard.css";
 
 function ResultCard({ result }) {
@@ -33,6 +34,24 @@ function ResultCard({ result }) {
           </span>
         </div>
 
+        {/* Intermediate Model */}
+        <div className="model-box highlight">
+          <h4>Intermediate Model</h4>
+          <p className="model-name">XGBoost</p>
+
+          <p className="probability">
+            {(result.intermediate_model.probability * 100).toFixed(2)}%
+          </p>
+
+          <span
+            className={`risk-badge ${renderRiskClass(
+              result.intermediate_model.risk_level
+            )}`}
+          >
+            {result.intermediate_model.risk_level}
+          </span>
+        </div>
+
         {/* Final Model */}
         <div className="model-box highlight">
           <h4>Final Model</h4>
@@ -55,6 +74,10 @@ function ResultCard({ result }) {
       {/* Charts Section */}
       <div className="charts-section">
         <RiskGauge result={result} />
+      </div>
+
+      <div className="charts-section">
+        <RollOutPlan result={result} />
       </div>
     </div>
   );

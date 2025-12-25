@@ -18,6 +18,7 @@ lgbm_model = joblib.load("models/lightgbm_model.pkl")
 
 # Load models & preprocessing artifacts
 baseline_model = joblib.load("models/logistic_regression_model.pkl")  # Baseline
+intermediate_model = joblib.load("models/xgboost_model.pkl")
 final_model = joblib.load("models/lightgbm_model.pkl")               # Final
 
 scaler = joblib.load("models/scaler.pkl")
@@ -98,6 +99,9 @@ def predict(data: LoanInput):
     base_pred = baseline_model.predict(scaled_input)[0]
     base_prob = baseline_model.predict_proba(scaled_input)[0][1]
 
+    int_pred = intermediate_model.predict(final_input)[0]
+    int_prob = intermediate_model.predict_proba(final_input)[0][1]
+
     # Final model (LightGBM) - uses NON-scaled
     final_pred = final_model.predict(final_input)[0]
     final_prob = final_model.predict_proba(final_input)[0][1]
@@ -108,13 +112,32 @@ def predict(data: LoanInput):
             "name": "Logistic Regression",
             "prediction": int(base_pred),
             "probability": round(float(base_prob), 4),
-            "risk_level": "HIGH DEFAULT RISK" if base_prob >= 0.5 else "LOW DEFAULT RISK"
+            "risk_level": (
+                "LOW DEFAULT RISK" if base_prob < 0.33
+                else "MEDIUM DEFAULT RISK" if base_prob < 0.66
+                else "HIGH DEFAULT RISK"
+            )
+        },
+        "intermediate_model": {
+            "name": "XGBoost",
+            "prediction": int(int_pred),
+            "probability": round(float(int_prob), 4),
+            "risk_level": (
+                "LOW DEFAULT RISK" if int_prob < 0.33
+                else "MEDIUM DEFAULT RISK" if int_prob < 0.66
+                else "HIGH DEFAULT RISK"
+            )
+
         },
         "final_model": {
             "name": "LightGBM",
             "prediction": int(final_pred),
             "probability": round(float(final_prob), 4),
-            "risk_level": "HIGH DEFAULT RISK" if final_prob >= 0.5 else "LOW DEFAULT RISK"
+            "risk_level": (
+                "LOW DEFAULT RISK" if final_prob < 0.33
+                else "MEDIUM DEFAULT RISK" if final_prob < 0.66
+                else "HIGH DEFAULT RISK"
+            )
         }
     }
 
@@ -143,26 +166,3 @@ def get_roc_metrics():
             "auc": round(float(auc), 4),
         }
     return roc_results
-
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-
-@app.get("/model-performance")
-def get_performance():
-    results = {}
-
-    for name, model, needs_scaling in [
-        ("Logistic", log_model, True),
-        ("XGBoost", xgb_model, False),
-        ("LightGBM", lgbm_model, False),
-    ]:
-        X_eval = scaler.transform(X_test) if needs_scaling else X_test
-        y_pred = model.predict(X_eval)
-
-        results[name] = {
-            "accuracy": round(accuracy_score(y_test, y_pred), 4),
-            "precision": round(precision_score(y_test, y_pred), 4),
-            "recall": round(recall_score(y_test, y_pred), 4),
-            "f1": round(f1_score(y_test, y_pred), 4),
-        }
-
-    return results
