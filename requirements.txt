@@ -1,0 +1,24 @@
+# Core
+numpy
+pandas
+
+# Visualization & EDA
+matplotlib
+seaborn
+
+# Machine Learning
+scikit-learn
+
+# Advanced Models
+xgboost
+lightgbm
+
+# API (Milestone 5)
+fastapi
+uvicorn
+
+# Utilities
+joblib
+
+# Frontend support (optional, safe)
+plotly
