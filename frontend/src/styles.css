@@ -1,0 +1,62 @@
+body {
+  font-family: Arial;
+  background: #f4f6f8;
+}
+
+.container {
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  color: #2c3e50;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.kpi-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.chart-box {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.recommend-box {
+  margin-top: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+input, textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+button {
+  background: #3498db;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
