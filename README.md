@@ -38,8 +38,6 @@ Generate risk-based recommendations
 
 Design API & frontend architecture for real-world usage
 
-🗂️ Project Structure CreditPathAI-Smart_Loan_Recovery_System/ │ ├── data/ │ ├── raw/ # Original datasets │ └── processed/ # Cleaned & engineered datasets │ ├── notebooks/ │ ├── 00_data_overview.ipynb │ ├── 01_data_ingestion.ipynb │ ├── 02_eda_application_train.ipynb │ ├── 03_eda_other_tables.ipynb │ ├── 04_feature_engineering.ipynb │ ├── 05_baseline_logistic_regression.ipynb │ ├── 06_advanced_models.ipynb │ └── 07_recommendation_engine.ipynb │ ├── src/ │ ├── data_ingestion.py │ ├── eda.py │ ├── utils.py │ └── config.py │ ├── frontend/ │ ├── src/ │ │ ├── services/ │ │ │ └── api.js │ │ └── README.md │ ├── docs/ │ ├── Data_sources.md │ ├── KPIs.md │ ├── logs/ # EDA summaries ├── requirements.txt └── README.md
-
 🚀 Milestone-wise Implementation 🔹 Milestone 1: Data Overview & Ingestion
 
 Loaded Home Credit datasets safely
