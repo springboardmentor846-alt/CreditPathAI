@@ -94,17 +94,30 @@ Due to system limitations, data was sampled efficiently.
 
 Models trained:
 
-Random Forest Classifier
+XGBoost
 
 Results:
 
-Train AUC-ROC: 0.94
+Train AUC-ROC: 0.73
 
-Test AUC-ROC: 0.73
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.95      0.84      0.89      9189
+           1       0.20      0.47      0.28       811
+
+    accuracy                           0.81     10000
+   macro avg       0.58      0.65      0.59     10000
+weighted avg       0.89      0.81      0.84     10000
+
+Confusion Matrix:
+ [[7700 1489]
+ [ 430  381]]
 
 📌 Shows better learning capacity but highlights overfitting risk.
 
-(XGBoost & LightGBM planned – limited by environment constraints)
+(LightGBM planned – limited by environment constraints)
 
 🔹 Milestone 5: Recommendation Engine
 
