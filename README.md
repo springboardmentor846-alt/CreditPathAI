@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿# 📊 CreditPathAI
 
 CreditPathAI is an **end-to-end AI-powered credit risk assessment system** that predicts loan default probability and provides **actionable recommendations** for lenders.  
@@ -72,5 +71,3 @@ CreditPathAI/
 # Workflow: Data ingestion → Feature engineering → Model training → Recommendation engine → API → Dashboard.
 
 
-
->>>>>>> upstream/main
