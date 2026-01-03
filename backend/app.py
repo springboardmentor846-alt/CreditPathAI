@@ -22,7 +22,7 @@ intermediate_model = joblib.load("models/xgboost_model.pkl")
 final_model = joblib.load("models/lightgbm_model.pkl")               # Final
 
 scaler = joblib.load("models/scaler.pkl")
-label_encoders = joblib.load("models/label_encoders.pkl")
+ohe = joblib.load("models/onehot_encoder.pkl")
 feature_columns = joblib.load("models/feature_columns.pkl")
 
 print("Loaded baseline model, final model, scaler, encoders, and features!")
@@ -78,9 +78,22 @@ def predict(data: LoanInput):
     df_input["PaymentToIncome"] = df_input["MonthlyPayment"] / (df_input["Income"] / 12)
     df_input["CreditUtilization"] = df_input["LoanAmount"] / df_input["CreditScore"]
 
-    # ---- Label Encoding ----
-    for col, encoder in label_encoders.items():
-        df_input[col + "_encoded"] = encoder.transform(df_input[col])
+    categorical_cols = [
+    'Education', 'EmploymentType', 'MaritalStatus',
+    'HasMortgage', 'HasDependents', 'LoanPurpose', 'HasCoSigner'
+]
+
+    encoded = ohe.transform(df_input[categorical_cols])
+
+    encoded_df = pd.DataFrame(
+        encoded,
+        columns=ohe.get_feature_names_out(categorical_cols)
+    )
+
+    df_input = pd.concat(
+        [df_input.drop(columns=categorical_cols), encoded_df],
+        axis=1
+    )
 
     # ---- Align with training features ----
     final_input = pd.DataFrame(
@@ -144,9 +157,9 @@ def predict(data: LoanInput):
 @app.get("/roc-metrics")
 def get_roc_metrics():
     models = {
-        "Logistic Regression": (log_model, True),   # Needs scaling
-        "XGBoost": (xgb_model, False),              # No scaling
-        "LightGBM": (lgbm_model, False),            # No scaling
+        "Logistic Regression": (log_model, True),
+        "XGBoost": (xgb_model, False),
+        "LightGBM": (lgbm_model, False),
     }
     
     roc_results = {}
