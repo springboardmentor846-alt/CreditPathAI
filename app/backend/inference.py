@@ -18,19 +18,26 @@ app.add_middleware(
 
 # Pydantic model matches your React form fields
 class InputData(BaseModel):
-    loan_amount: float
-    rate_of_interest: float
-    term: int
-    LTV: float
-    Upfront_charges: float
-    Credit_Worthiness: str
-    loan_type: str
-    Security_Type: str
-    loan_purpose: str
-    open_credit: str
-    business_or_commercial: str
-    approv_in_adv: str
-    Neg_ammortization: str
+    
+    Age: int
+    Income: int
+    LoanAmount: int
+    CreditScore: int
+    MonthsEmployed: int
+    NumCreditLines: int
+    InterestRate: float
+    LoanTerm: int
+    DTIRatio: float
+
+    HasMortgage: str
+    HasDependents: str
+    HasCoSigner: str
+
+    Education: str
+    EmploymentType: str
+    MaritalStatus: str
+    LoanPurpose: str
+    
 
 @app.get("/")
 def home():
@@ -41,23 +48,8 @@ def predict(data: InputData):
     # Convert input to DataFrame
     user_df = pd.DataFrame([data.dict()])
 
-    # Derived features
-    user_df["loan_interest_burden"] = user_df["loan_amount"] * user_df["rate_of_interest"]
-    user_df["loan_term_pressure"] = user_df["loan_amount"] / (user_df["term"] + 1)
-    user_df["high_ltv_flag"] = (user_df["LTV"] > 80).astype(int)
-    user_df["negative_amort_flag"] = (user_df["Neg_ammortization"] == "Yes").astype(int)
-    user_df["business_risk_flag"] = (user_df["business_or_commercial"] == "Yes").astype(int)
-
     # Load model and expected features
-    model = joblib.load("loan_default_model.pkl")
-    feature_cols = joblib.load("model_features.pkl")
-
-    # Add missing columns
-    for col in feature_cols:
-        if col not in user_df.columns:
-            user_df[col] = 0  # or np.nan depending on model training
-
-    user_df = user_df[feature_cols]
+    model = joblib.load("loan_default_pipeline.pkl")
 
     probability = model.predict_proba(user_df)[0][1]
 
