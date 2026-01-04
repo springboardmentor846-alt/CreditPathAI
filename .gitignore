@@ -1,6 +1,11 @@
 __pycache__/
 venv/
+.env/
 *.pyc
 *.pkl
 *.sav
 .ipynb_checkpoints/
+node_modules/
+build/
+.DS_Store
+
