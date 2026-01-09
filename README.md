@@ -1,67 +1,57 @@
+# CreditPath AI – Loan Repayment Prediction
 
-📊 Exploratory Data Analysis (EDA) Report
-📌 Dataset Overview
+CreditPath AI is a machine learning project that predicts whether a borrower is **likely to repay a loan or not**, based on key financial and credit-related features.
 
-Total Records: 500
+The project covers the **complete ML workflow** from data cleaning to final prediction.
 
-Total Features: 21
+---
 
-Data Source: Smart Loan Recovery System Dataset
+## Features
 
-Objective: Predict borrower default risk & support recovery planning
+- Data preprocessing and cleaning  
+- Model training and comparison  
+- Algorithms used:
+  - Logistic Regression
+  - XGBoost
+  - LightGBM
+- Model evaluation using AUC-ROC and Confusion Matrix  
+- Best model selection (XGBoost)  
+- Final prediction using user input  
+- Input validation with minimal required features  
 
-🧩 Feature Types
-Feature Type	Columns
-🔢 Numerical	Age, Monthly_Income, Num_Dependents, Loan_Amount, Loan_Tenure, Interest_Rate, Collateral_Value, Outstanding_Loan_Amount, Monthly_EMI, Num_Missed_Payments, Days_Past_Due, Collection_Attempts
-🔠 Categorical	Gender, Employment_Type, Loan_Type, Payment_History, Recovery_Status, Collection_Method, Legal_Action_Taken, Borrower_ID, Loan_ID
-🧪 Data Quality Check
+---
 
-❗ Missing Values: 0 (No nulls found — dataset is clean)
+## Tech Stack
 
-🔁 Duplicates: Checked & handled if present
+- Python  
+- Pandas, NumPy  
+- Scikit-learn  
+- XGBoost, LightGBM  
+- Matplotlib  
 
-🏷 Data Types: Correctly assigned (categorical/object & numeric values separated properly)
+---
 
-📈 Numerical Feature Insights
+## Model Performance
 
-Loan & Income values vary widely across borrowers
+| Model | AUC-ROC |
+|------|--------|
+| Logistic Regression | 0.70 |
+| LightGBM | 0.79 |
+| **XGBoost** | **0.83** |
 
-Higher Num_Missed_Payments and Days_Past_Due indicate repayment risk
+---
 
-Outstanding Loan Amount, EMI & Loan Amount show financial load pattern
+## How It Works
 
-Age and Income distributions reflect typical working population borrower base
+1. Clean and preprocess loan data  
+2. Train multiple ML models  
+3. Evaluate and compare performance  
+4. Select the best model  
+5. Predict loan repayment outcome  
 
-🔡 Categorical Feature Insights
+---
 
-Gender, Employment Type, Loan Type, Payment History show diverse borrower categories
+## Sample Output
 
-Payment_History likely influences default behavior
-
-Recovery_Status acts as our Target Variable
-
-🔥 Correlation Highlights
-
-📌 Strong indicators of default risk:
-
-Num_Missed_Payments
-
-Days_Past_Due
-
-Payment_History
-
-Outstanding_Loan_Amount
-
-Loan_Amount ↔ Monthly_EMI show strong positive relationship
-
-Income-Loan balance influences repayment capability
-
-📝 Key Observations
-
-Dataset is clean, structured, and modeling-ready
-
-No missing data → smooth preprocessing step
-
-Recovery_Status selected as Target for classification
-
-Ideal for Logistic Regression binary prediction model
+```text
+Prediction: Borrower is likely to repay the loan
